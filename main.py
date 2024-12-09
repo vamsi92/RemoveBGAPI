@@ -21,7 +21,7 @@ def upload_to_github(file_name, file_content):
     }
     data = {
         "message": f"Add {file_name}",
-        "content": base64.b64encode(file_content).decode("utf-8"),
+        "content": base64.b64encode(file_content).decode("utf-8"),  # Encode file as base64
         "branch": GITHUB_BRANCH,
     }
 
@@ -45,11 +45,11 @@ def predict():
 
         # Save the result to a file
         file_name = "result.png"
-        with open(file_name, "wb") as f:
-            f.write(result)
+        with open(file_name, "wb") as f:  # Open in binary write mode
+            f.write(result)  # Ensure `result` is bytes
 
         # Upload the file to GitHub
-        with open(file_name, "rb") as f:
+        with open(file_name, "rb") as f:  # Read the file in binary mode
             file_content = f.read()
             file_url = upload_to_github(file_name, file_content)
 
