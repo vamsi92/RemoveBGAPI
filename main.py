@@ -47,7 +47,7 @@ def upload_to_github(filename, content):
     """
     Upload a file to GitHub after encoding in Base64.
     """
-    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename}"
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/{filename}"
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Content-Type": "application/json",
