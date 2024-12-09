@@ -28,10 +28,11 @@ def predict():
         output_path = result  # This should point to the result file in /tmp
         filename = os.path.basename(output_path)
 
-        # Upload the result to GitHub
+        # Read file content
         with open(output_path, 'rb') as f:
             content = f.read()
 
+        # Upload the result to GitHub
         response = upload_to_github(filename, content)
         if response.status_code == 201:
             return jsonify({'message': 'File uploaded to GitHub successfully'}), 200
@@ -43,16 +44,18 @@ def predict():
 
 def upload_to_github(filename, content):
     """
-    Upload a file to GitHub.
+    Upload a file to GitHub after encoding in Base64.
     """
     url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename}"
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Content-Type": "application/json",
     }
+    # Encode content in Base64
+    encoded_content = base64.b64encode(content).decode('utf-8')
     data = {
         "message": f"Upload {filename}",
-        "content": content.decode('utf-8'),  # Base64 encoded content
+        "content": encoded_content,  # Base64 encoded content
         "branch": GITHUB_BRANCH,
     }
 
