@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from gradio_client import Client, handle_file
 import requests
 import os
+import base64
 
 app = Flask(__name__)
 
